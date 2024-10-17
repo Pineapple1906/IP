@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{default}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+  <form action="#" th:action="@{/order/create}" th:object="${orderDto}" method="post">
+
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary btn-success">Создать</button>
+      <a class="btn btn-primary btn-danger" th:href="@{/order}">
+        Назад
+      </a>
+    </div>
+
+    <div class="mb-3">
+      <label for="supplier" class="form-label">Поставщик</label>
+      <select id="supplier" class="form-select" th:field="*{supplierId}" th:name="${selectedSupplier}">
+        <option th:each="value: ${suppliers}" th:selected="${selectedSupplier != null and selectedSupplier == value.id}" th:value="${value.id}" th:text=" ${value.name}"></option>
+      </select>
+    </div>
+    <p class="d-flex justify-content-between">
+      <label>Продукты:</label>
+      <div th:each="product : ${products}">
+        <input type="checkbox" name="genres" th:text="${product.name} + '(Цена: ' + ${product.cost} + ')  '"
+               th:value="${product.id} "
+               th:field="*{productsId}"
+        />
+      </div>
+    </p>
+
+  </form>
+</div>
+</body>
+</html>
